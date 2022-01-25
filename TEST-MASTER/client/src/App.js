@@ -33,7 +33,6 @@ function App() {
 
   const send = (e) => {
     e.preventDefault();
-    setDeneme(true);
     if (fileName === "" || belgeTuru === "" || kisi === "") {
       return;
     }
@@ -44,7 +43,9 @@ function App() {
     reader.readAsDataURL(fileName);
   };
 
+
   useEffect(() => {
+    
     if (res !== "") {
       console.log("trans blogu");
       let timer = new Date();
@@ -56,6 +57,7 @@ function App() {
           fName: fileName.name,
         }
       );
+
       tx1.signTransaction(key.current);
       blockChain.current.addTransaction(tx1);
       blockChain.current.minePendingTransactions();
@@ -89,7 +91,7 @@ function App() {
       transports: ["websocket", "polling", "flashsocket"],
     });
     blockChain.current = new BlockChain("null");
-
+    console.log("socket.current :",socket.current.blockChain);
     key.current = ec.keyFromPrivate(
       code + "6abc91f1cd74bcfccc5b0508f6d7e019d114e2e99139a2d11ff362cd6ffc82c"
     );
@@ -126,9 +128,7 @@ function App() {
       setDeneme(false);
     });
 
-  }, [code,deneme]);
-
-
+  }, [code]);
 
   return (
     <div className="App">
