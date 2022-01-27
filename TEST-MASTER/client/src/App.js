@@ -23,7 +23,7 @@ function App() {
   const [notify, setNotify] = useState(false);
   const [code, setCode] = useState("");   // kisinin public keyi
   const [belge, setBelge] = useState([]);
-  const [deneme, setDeneme] = useState(false);
+
   const opt1 = useRef(null);
   const opt2 = useRef(null);
   const file = useRef(null);
@@ -45,7 +45,7 @@ function App() {
 
 
   useEffect(() => {
-    
+
     if (res !== "") {
       console.log("trans blogu");
       let timer = new Date();
@@ -125,7 +125,6 @@ function App() {
       });
       setBelge(tempArray);
       console.log("send blogu zamani : ", (new Date() - timer) / 1000);
-      setDeneme(false);
     });
 
   }, [code]);
