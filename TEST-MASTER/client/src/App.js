@@ -2,9 +2,8 @@ import "./App.css";
 import "./style.css";
 import Transaction from "./chain/Transaction";
 import BlockChain from "./chain/BlockChain";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import { io } from "socket.io-client";
-import LoginScreen from "./components/LoginScreen";
 const EC = require("elliptic").ec;
 const ec = new EC("secp256k1");
 
@@ -22,9 +21,9 @@ function App() {
   const [fileName, setFileName] = useState("");
   const [res, setRes] = useState("");
   const [notify, setNotify] = useState(false);
-  const [code, setCode] = useState(""); // kisinin public keyi
+  const [code, setCode] = useState("");   // kisinin public keyi
   const [belge, setBelge] = useState([]);
-  const [deneme, setDeneme] = useState(false);
+
   const opt1 = useRef(null);
   const opt2 = useRef(null);
   const file = useRef(null);
@@ -44,7 +43,9 @@ function App() {
     reader.readAsDataURL(fileName);
   };
 
+
   useEffect(() => {
+
     if (res !== "") {
       console.log("trans blogu");
       let timer = new Date();
@@ -74,22 +75,23 @@ function App() {
     }
   }, [res]);
 
-  useEffect(() => {
-    // kod atamasi
+
+  useEffect(() => {    // kod atamasi
     let res = prompt("kisi kodu girin");
     if (res !== null && res !== "") {
       setCode(res);
     }
   }, []);
 
+
   useEffect(() => {
     if (!code) return;
-    console.log("socket.current :", socket.current);
+    console.log("socket.current :",socket.current);
     socket.current = io("http://localhost:5000/", {
       transports: ["websocket", "polling", "flashsocket"],
     });
     blockChain.current = new BlockChain("null");
-    console.log("socket.current :", socket.current.blockChain);
+    console.log("socket.current :",socket.current.blockChain);
     key.current = ec.keyFromPrivate(
       code + "6abc91f1cd74bcfccc5b0508f6d7e019d114e2e99139a2d11ff362cd6ffc82c"
     );
@@ -114,7 +116,7 @@ function App() {
       console.log("send blogu");
       let timer = new Date();
       blockChain.current.chain = JSON.parse(chain);
-      console.log("x", JSON.parse(chain));
+      console.log("x",JSON.parse(chain));
       let tempArray = blockChain.current.chain.filter((el) => {
         console.log();
         return (
@@ -123,92 +125,91 @@ function App() {
       });
       setBelge(tempArray);
       console.log("send blogu zamani : ", (new Date() - timer) / 1000);
-      setDeneme(false);
     });
+
   }, [code]);
 
-  // return (
-  //   <div className="App">
-  //     <div className="container">
-  //       <form className="form-inline">
-  //         <label htmlFor="paper-type">Belge Türü</label>
-  //         <select
-  //           defaultValue={"default"}
-  //           onChange={(e) => setBelgeTuru(e.target.value)}
-  //           name="paper-type"
-  //           id="paper-type"
-  //         >
-  //           <option ref={opt1} value="default" disabled hidden>
-  //             Belge Türü Seçiniz...
-  //           </option>
-  //           <option value="obelgesi">Öğrenci Belgesi</option>
-  //           <option value="transkript">Transkript</option>
-  //         </select>
+  return (
+    <div className="App">
+      <div className="container">
+        <form className="form-inline">
+          <label htmlFor="paper-type">Belge Türü</label>
+          <select
+            defaultValue={"default"}
+            onChange={(e) => setBelgeTuru(e.target.value)}
+            name="paper-type"
+            id="paper-type"
+          >
+            <option ref={opt1} value="default" disabled hidden>
+              Belge Türü Seçiniz...
+            </option>
+            <option value="obelgesi">Öğrenci Belgesi</option>
+            <option value="transkript">Transkript</option>
+          </select>
 
-  //         <label htmlFor="kisi">Gönderilecek Kişi</label>
-  //         <select
-  //           defaultValue={"default"}
-  //           onChange={(e) => setKisi(e.target.value)}
-  //           name="kisi"
-  //           id="kisi"
-  //         >
-  //           <option ref={opt2} value="default" disabled hidden>
-  //             Kişi Seçiniz...
-  //           </option>
-  //           {Object.keys(publicKeys).map((el) => {
-  //             if (el !== key?.current?.getPublic("hex")) {
-  //               //console.log("Current : ",key.current.getPublic("hex"));
-  //               return (
-  //                 <option key={el} value={publicKeys[el]}>
-  //                   {
-  //                     { baran: "Baran", ozcan: "Özcan", ziya: "Ziya" }[
-  //                       publicKeys[el]
-  //                     ]
-  //                   }
-  //                 </option>
-  //               );
-  //             }
-  //           })}
-  //         </select>
+          <label htmlFor="kisi">Gönderilecek Kişi</label>
+          <select
+            defaultValue={"default"}
+            onChange={(e) => setKisi(e.target.value)}
+            name="kisi"
+            id="kisi"
+          >
+            <option ref={opt2} value="default" disabled hidden>
+              Kişi Seçiniz...
+            </option>
+            {Object.keys(publicKeys).map((el) => {
+              if (el !== key?.current?.getPublic("hex")) {
+                //console.log("Current : ",key.current.getPublic("hex"));
+                return (
+                  <option key={el} value={publicKeys[el]}>
+                    {
+                      { baran: "Baran", ozcan: "Özcan", ziya: "Ziya" }[
+                        publicKeys[el]
+                      ]
+                    }
+                  </option>
+                );
+              }
+            })}
+          </select>
 
-  //         <label htmlFor="belge-yukleme">Belge Yükle:</label>
-  //         <input
-  //           ref={file}
-  //           onChange={(e) => setFileName(e.target.files[0])}
-  //           type="file"
-  //           name="belge-yukleme"
-  //           accept=".pdf"
-  //           id="belge-yukleme"
-  //         />
+          <label htmlFor="belge-yukleme">Belge Yükle:</label>
+          <input
+            ref={file}
+            onChange={(e) => setFileName(e.target.files[0])}
+            type="file"
+            name="belge-yukleme"
+            accept=".pdf"
+            id="belge-yukleme"
+          />
 
-  //         <button onClick={send} type="submit">
-  //           Gönder
-  //         </button>
-  //         {notify && (
-  //           <div id="notify">{`${fileName.name} adlı dosya ${kisi} adlı kişiye gönderildi!`}</div>
-  //         )}
-  //       </form>
+          <button onClick={send} type="submit">
+            Gönder
+          </button>
+          {notify && (
+            <div id="notify">{`${fileName.name} adlı dosya ${kisi} adlı kişiye gönderildi!`}</div>
+          )}
+        </form>
 
-  //       <div className="right">
-  //         {belge.map((eleman, index) => {
-  //           return (
-  //             <div key={index} className="def">
-  //               <a
-  //                 href={eleman.transactions[0].data.data}
-  //                 target="_self"
-  //                 download={eleman.transactions[0].data.fName + ".pdf"}
-  //               >
-  //                 <p>{eleman.transactions[0].data.fName}</p>
-  //               </a>
-  //               <p>{publicKeys[eleman.transactions[0].sender]}</p>
-  //             </div>
-  //           );
-  //         })}
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
-  return <LoginScreen />;
+        <div className="right">
+          {belge.map((eleman, index) => {
+            return (
+              <div key={index} className="def">
+                <a
+                  href={eleman.transactions[0].data.data}
+                  target="_self"
+                  download={eleman.transactions[0].data.fName + ".pdf"}
+                >
+                  <p>{eleman.transactions[0].data.fName}</p>
+                </a>
+                <p>{publicKeys[eleman.transactions[0].sender]}</p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default App;
