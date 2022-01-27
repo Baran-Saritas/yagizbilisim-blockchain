@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import {
     GET_DATA_REQUEST,
     GET_DATA_SUCCESS,
