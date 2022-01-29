@@ -1,4 +1,4 @@
-.login-form {
+.signup-form {
   margin: auto;
   margin-top: 10%;
   padding: 10px;
@@ -6,9 +6,13 @@
   border: 1px solid #d9d9d9;
   border-radius: 5px;
 }
-.login-form-forgot {
+.signup-form-forgot {
   float: right;
 }
-.login-form-button {
+.signup-form-button {
   width: 100%;
+}
+.login-navigation {
+  text-align: right;
+  color: #aaaaaa;
 }
