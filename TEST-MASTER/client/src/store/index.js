@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import reducers from './reducers';
+import { reducers } from './reducers/userReducer';
 
 export const middlewares = [thunk];
 let enhancer = applyMiddleware(...middlewares);

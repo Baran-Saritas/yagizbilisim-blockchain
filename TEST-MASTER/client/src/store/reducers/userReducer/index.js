@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import {
     GET_DATA_REQUEST,
     GET_DATA_SUCCESS,
@@ -19,7 +20,7 @@ import {
     },
   };
   
-  export default function (state = initialState, action) {
+  export  const reducers =  (state = initialState, action) => {
     switch (action.type) {
       case GET_DATA_REQUEST:
         return { ...state, isLoading: true };

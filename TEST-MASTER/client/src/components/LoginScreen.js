@@ -4,11 +4,16 @@ import "antd/dist/antd.css";
 import "../styles/LoginScreen.css";
 import { Form, Input, Button, Checkbox } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { loginUser } from "../store/actions/userActions";
+import { useDispatch } from "react-redux";
 
-function LoginScreen() {
+const LoginScreen = () => {
+
+  const dispacth = useDispatch();
   const onFinish = (values) => {
     console.log("Formdan Gelen Veriler: ", values);
-  };
+    dispacth(loginUser(values.username, values.password));
+  }; 
   return (
     <Form
       name='normal_login'
