@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
 import "../styles/LoginScreen.css";
 import { Form, Input, Button, Checkbox } from "antd";

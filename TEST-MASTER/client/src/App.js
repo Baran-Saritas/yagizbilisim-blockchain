@@ -2,14 +2,13 @@ import "./App.css";
 import "./style.css";
 import Transaction from "./chain/Transaction";
 import BlockChain from "./chain/BlockChain";
-import React, { useState, useEffect,useRef } from "react";
-import { io } from "socket.io-client";
 import LoginScreen from "./components/LoginScreen";
-import { Provider } from "react-redux";
-import store from "./store"
+
+import React, { useState, useEffect, useRef } from "react";
+import { io } from "socket.io-client";
+import SignupScreen from "./components/SignupScreen";
 const EC = require("elliptic").ec;
 const ec = new EC("secp256k1");
-
 
 function App() {
   const publicKeys = {
@@ -25,7 +24,7 @@ function App() {
   const [fileName, setFileName] = useState("");
   const [res, setRes] = useState("");
   const [notify, setNotify] = useState(false);
-  const [code, setCode] = useState("");   // kisinin public keyi
+  const [code, setCode] = useState(""); // kisinin public keyi
   const [belge, setBelge] = useState([]);
 
   const opt1 = useRef(null);
@@ -47,9 +46,7 @@ function App() {
     reader.readAsDataURL(fileName);
   };
 
-
   useEffect(() => {
-
     if (res !== "") {
       console.log("trans blogu");
       let timer = new Date();
@@ -79,23 +76,22 @@ function App() {
     }
   }, [res]);
 
-
-  useEffect(() => {    // kod atamasi
+  useEffect(() => {
+    // kod atamasi
     let res = prompt("kisi kodu girin");
     if (res !== null && res !== "") {
       setCode(res);
     }
   }, []);
 
-
   useEffect(() => {
     if (!code) return;
-    console.log("socket.current :",socket.current);
+    console.log("socket.current :", socket.current);
     socket.current = io("http://localhost:5000/", {
       transports: ["websocket", "polling", "flashsocket"],
     });
     blockChain.current = new BlockChain("null");
-    console.log("socket.current :",socket.current.blockChain);
+    console.log("socket.current :", socket.current.blockChain);
     key.current = ec.keyFromPrivate(
       code + "6abc91f1cd74bcfccc5b0508f6d7e019d114e2e99139a2d11ff362cd6ffc82c"
     );
@@ -120,7 +116,7 @@ function App() {
       console.log("send blogu");
       let timer = new Date();
       blockChain.current.chain = JSON.parse(chain);
-      console.log("x",JSON.parse(chain));
+      console.log("x", JSON.parse(chain));
       let tempArray = blockChain.current.chain.filter((el) => {
         console.log();
         return (
@@ -130,7 +126,6 @@ function App() {
       setBelge(tempArray);
       console.log("send blogu zamani : ", (new Date() - timer) / 1000);
     });
-
   }, [code]);
 
   // return (
@@ -215,10 +210,10 @@ function App() {
   //   </div>
   // );
   return (
-  <Provider store ={store}>
-  <LoginScreen></LoginScreen>
-  </Provider>
-  )
+    <div>
+      <SignupScreen />;
+    </div>
+  );
 }
 
 export default App;
