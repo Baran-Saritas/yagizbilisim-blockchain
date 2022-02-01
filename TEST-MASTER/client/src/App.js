@@ -2,11 +2,17 @@ import "./App.css";
 import "./style.css";
 import Transaction from "./chain/Transaction";
 import BlockChain from "./chain/BlockChain";
-import LoginScreen from "./components/LoginScreen";
 
+import { Route } from "react-router-dom";
 import React, { useState, useEffect, useRef } from "react";
 import { io } from "socket.io-client";
+
+// Component Imports
+import LoginScreen from "./components/LoginScreen";
 import SignupScreen from "./components/SignupScreen";
+import Homescreen from "./components/HomeScreen";
+import NoPage from "./components/NoPage";
+
 const EC = require("elliptic").ec;
 const ec = new EC("secp256k1");
 
@@ -211,7 +217,11 @@ function App() {
   // );
   return (
     <div>
-      <SignupScreen />;
+      <div>
+        <Route exact path='/' component={LoginScreen} />
+        <Route path='/signup' component={SignupScreen} />
+        <Route path='/home' component={Homescreen} />
+      </div>
     </div>
   );
 }
