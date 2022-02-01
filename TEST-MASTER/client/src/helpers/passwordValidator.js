@@ -4,7 +4,7 @@ export function passwordValidator(password) {
   return "";
 }
 export function passwordControlValidator(password, passworControl) {
-  if (password != passworControl)
+  if (password !== passworControl)
     return "Passwords you entered are not matching.";
   return "";
 }
