@@ -3,10 +3,13 @@ import "./style.css";
 import Transaction from "./chain/Transaction";
 import BlockChain from "./chain/BlockChain";
 import LoginScreen from "./components/LoginScreen";
-
+import SignupScreen from "./components/SignupScreen";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import AppLayout  from "./components/AppLayout/index";
 import React, { useState, useEffect, useRef } from "react";
 import { io } from "socket.io-client";
-import SignupScreen from "./components/SignupScreen";
+import store from "./store";
+import { Provider } from "react-redux";
 const EC = require("elliptic").ec;
 const ec = new EC("secp256k1");
 
@@ -128,92 +131,110 @@ function App() {
     });
   }, [code]);
 
-  // return (
-  //   <div className="App">
-  //     <div className="container">
-  //       <form className="form-inline">
-  //         <label htmlFor="paper-type">Belge Türü</label>
-  //         <select
-  //           defaultValue={"default"}
-  //           onChange={(e) => setBelgeTuru(e.target.value)}
-  //           name="paper-type"
-  //           id="paper-type"
-  //         >
-  //           <option ref={opt1} value="default" disabled hidden>
-  //             Belge Türü Seçiniz...
-  //           </option>
-  //           <option value="obelgesi">Öğrenci Belgesi</option>
-  //           <option value="transkript">Transkript</option>
-  //         </select>
+  // ctrl + k c   k u
 
-  //         <label htmlFor="kisi">Gönderilecek Kişi</label>
-  //         <select
-  //           defaultValue={"default"}
-  //           onChange={(e) => setKisi(e.target.value)}
-  //           name="kisi"
-  //           id="kisi"
-  //         >
-  //           <option ref={opt2} value="default" disabled hidden>
-  //             Kişi Seçiniz...
-  //           </option>
-  //           {Object.keys(publicKeys).map((el) => {
-  //             if (el !== key?.current?.getPublic("hex")) {
-  //               //console.log("Current : ",key.current.getPublic("hex"));
-  //               return (
-  //                 <option key={el} value={publicKeys[el]}>
-  //                   {
-  //                     { baran: "Baran", ozcan: "Özcan", ziya: "Ziya" }[
-  //                       publicKeys[el]
-  //                     ]
-  //                   }
-  //                 </option>
-  //               );
-  //             }
-  //           })}
-  //         </select>
-
-  //         <label htmlFor="belge-yukleme">Belge Yükle:</label>
-  //         <input
-  //           ref={file}
-  //           onChange={(e) => setFileName(e.target.files[0])}
-  //           type="file"
-  //           name="belge-yukleme"
-  //           accept=".pdf"
-  //           id="belge-yukleme"
-  //         />
-
-  //         <button onClick={send} type="submit">
-  //           Gönder
-  //         </button>
-  //         {notify && (
-  //           <div id="notify">{`${fileName.name} adlı dosya ${kisi} adlı kişiye gönderildi!`}</div>
-  //         )}
-  //       </form>
-
-  //       <div className="right">
-  //         {belge.map((eleman, index) => {
-  //           return (
-  //             <div key={index} className="def">
-  //               <a
-  //                 href={eleman.transactions[0].data.data}
-  //                 target="_self"
-  //                 download={eleman.transactions[0].data.fName + ".pdf"}
-  //               >
-  //                 <p>{eleman.transactions[0].data.fName}</p>
-  //               </a>
-  //               <p>{publicKeys[eleman.transactions[0].sender]}</p>
-  //             </div>
-  //           );
-  //         })}
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
   return (
-    <div>
-      <SignupScreen />;
-    </div>
+    // <div className="App">
+    //   <div className="container">
+    //     <form className="form-inline">
+    //       <label htmlFor="paper-type">Belge Türü</label>
+    //       <select
+    //         defaultValue={"default"}
+    //         onChange={(e) => setBelgeTuru(e.target.value)}
+    //         name="paper-type"
+    //         id="paper-type"
+    //       >
+    //         <option ref={opt1} value="default" disabled hidden>
+    //           Belge Türü Seçiniz...
+    //         </option>
+    //         <option value="obelgesi">Öğrenci Belgesi</option>
+    //         <option value="transkript">Transkript</option>
+    //       </select>
+
+    //       <label htmlFor="kisi">Gönderilecek Kişi</label>
+    //       <select
+    //         defaultValue={"default"}
+    //         onChange={(e) => setKisi(e.target.value)}
+    //         name="kisi"
+    //         id="kisi"
+    //       >
+    //         <option ref={opt2} value="default" disabled hidden>
+    //           Kişi Seçiniz...
+    //         </option>
+    //         {Object.keys(publicKeys).map((el) => {
+    //           if (el !== key?.current?.getPublic("hex")) {
+    //             //console.log("Current : ",key.current.getPublic("hex"));
+    //             return (
+    //               <option key={el} value={publicKeys[el]}>
+    //                 {
+    //                   { baran: "Baran", ozcan: "Özcan", ziya: "Ziya" }[
+    //                     publicKeys[el]
+    //                   ]
+    //                 }
+    //               </option>
+    //             );
+    //           }
+    //         })}
+    //       </select>
+
+    //       <label htmlFor="belge-yukleme">Belge Yükle:</label>
+    //       <input
+    //         ref={file}
+    //         onChange={(e) => setFileName(e.target.files[0])}
+    //         type="file"
+    //         name="belge-yukleme"
+    //         accept=".pdf"
+    //         id="belge-yukleme"
+    //       />
+
+    //       <button onClick={send} type="submit">
+    //         Gönder
+    //       </button>
+    //       {notify && (
+    //         <div id="notify">{`${fileName.name} adlı dosya ${kisi} adlı kişiye gönderildi!`}</div>
+    //       )}
+    //     </form>
+
+    //     <div className="right">
+    //       {belge.map((eleman, index) => {
+    //         return (
+    //           <div key={index} className="def">
+    //             <a
+    //               href={eleman.transactions[0].data.data}
+    //               target="_self"
+    //               download={eleman.transactions[0].data.fName + ".pdf"}
+    //             >
+    //               <p>{eleman.transactions[0].data.fName}</p>
+    //             </a>
+    //             <p>{publicKeys[eleman.transactions[0].sender]}</p>
+    //           </div>
+    //         );
+    //       })}
+    //     </div>
+    //   </div>
+    // </div>
+
+
+
+    <Provider store={store}>
+      <Router>
+        <Switch>
+          <Route exact path="/login" component={LoginScreen} />
+          <Route exact path="/register" component={SignupScreen} />
+          <Route path="/" component={AppLayout} />
+        </Switch>
+      </Router>
+    </Provider>
+
+
+
+
+
+
+
+    
   );
+
 }
 
 export default App;

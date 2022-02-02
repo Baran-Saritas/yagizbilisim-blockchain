@@ -7,24 +7,22 @@ import {
   } from "../constants";
   
 
-export const loginUser = (username, password) => async (dispatch) =>  {
+export const loginUser = (username, password) => async (dispatch) =>  {  // register 
 
     try {
-        dispatch({type:POST_DATA_REQUEST});
-        let id= 11;
-        console.log("client req",{id,username,password});
+       dispatch({type:POST_DATA_REQUEST});
+        
+        console.log("client req",{username,password});
 
-        const response = await axios.post("http://localhost:8080/users", {id:11,username,password,})
-        console.log("sonuc ",response);
-        /*1fetch("http://localhost:8080/users")
-        .then(res => res.json())
-        .then(
-            (response)=>{
-                console.log(response);
-                
-            }
+        const response = await axios.post("http://localhost:8080/users", 
+        {   username,
+            password,
+            email:"asd",
+            publicKey:"234235236",
+            privateKey:"2352436342634",
+        })
+        console.log("sonuc ",response.status);
 
-        ) */
         dispatch({type:POST_DATA_SUCCESS});
     } catch (error) {
         
