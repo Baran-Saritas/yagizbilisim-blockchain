@@ -9,12 +9,12 @@ import {
   passwordControlValidator,
 } from "../../helpers/passwordValidator";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { registerUser } from "../../store/actions/userActions";
 
 const SignupPage = () => {
   const dispacth = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const onFinish = (values) => {
     if (emailValidator(values.email)) {
@@ -32,7 +32,7 @@ const SignupPage = () => {
     console.log("Formdan Gelen Veriler: ", values);
 
     dispacth(registerUser(values.username, values.password));
-    history.push("/login");
+    navigate("/login");
   };
   return (
     <Form

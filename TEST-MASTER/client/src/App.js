@@ -4,8 +4,8 @@ import "./style.css";
 import {
   BrowserRouter as Router,
   Route,
-  Switch,
-  Redirect,
+  Routes,
+  useRoutes,
 } from "react-router-dom";
 
 import React from "react";
@@ -18,22 +18,11 @@ import SignupPage from "./components/SignupPage/index";
 import NoPage from "./components/ErrorPage/index";
 import AppLayout from "./components/AppLayout/index";
 import { loginUser } from "./store/actions/userActions";
+import { useCustomRoutes } from "./navigation/useCustomRoutes";
 
 function App() {
-  return (
-    <Provider store={store}>
-      <Router>
-        <Switch>
-          <Route exact path='/login' component={LoginPage}/>
-          <Route exact path='/register' component={SignupPage}/>
-          <Route path='/'>
-          {localStorage.getItem("currentUser") == null ?  (<LoginPage/>):(<AppLayout/>) }
-          </Route>
-          <Route path='*' component={NoPage} />
-        </Switch>
-      </Router>
-    </Provider>
-  );
+  const routes = useRoutes(useCustomRoutes());
+  return <Provider store={store}>{routes}</Provider>;
 }
 
 export default App;

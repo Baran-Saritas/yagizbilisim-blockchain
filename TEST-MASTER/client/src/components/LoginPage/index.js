@@ -5,15 +5,15 @@ import { Form, Input, Button, Checkbox } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { loginUser } from "../../store/actions/userActions";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const dispacth = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const onFinish = (values) => {
     console.log("Formdan Gelen Veriler: ", values);
     dispacth(loginUser(values.username, values.password));
-    history.push("/");
+    navigate("/");
   };
   return (
     <Form
