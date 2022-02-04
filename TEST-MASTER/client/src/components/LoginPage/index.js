@@ -1,21 +1,20 @@
 import React from "react";
 import "antd/dist/antd.css";
-import "../styles/LoginScreen.css";
+import "./index.css";
 import { Form, Input, Button, Checkbox } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { loginUser } from "../store/actions/userActions";
+import { loginUser } from "../../store/actions/userActions";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-const LoginScreen = () => {
-
+const LoginPage = () => {
   const dispacth = useDispatch();
   const history = useHistory();
   const onFinish = (values) => {
     console.log("Formdan Gelen Veriler: ", values);
     dispacth(loginUser(values.username, values.password));
     history.push("/");
-  }; 
+  };
   return (
     <Form
       name='normal_login'
@@ -67,6 +66,6 @@ const LoginScreen = () => {
       </Form.Item>
     </Form>
   );
-}
+};
 
-export default LoginScreen;
+export default LoginPage;

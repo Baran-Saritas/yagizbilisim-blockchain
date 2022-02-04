@@ -1,38 +1,38 @@
 import React from "react";
 import "antd/dist/antd.css";
-import "../styles/SignupScreen.css";
-import { Form, Input, Button, Checkbox } from "antd";
+import "./index.css";
+import { Form, Input, Button } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
-import { emailValidator } from "../helpers/emailValidator";
+import { emailValidator } from "../../helpers/emailValidator";
 import {
   passwordValidator,
   passwordControlValidator,
-} from "../helpers/passwordValidator";
+} from "../../helpers/passwordValidator";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { registerUser } from "../store/actions/userActions";
+import { registerUser } from "../../store/actions/userActions";
 
-const SignupScreen = () => {
-
+const SignupPage = () => {
   const dispacth = useDispatch();
   const history = useHistory();
-
 
   const onFinish = (values) => {
     if (emailValidator(values.email)) {
       alert("Incorrect Email!");
+      return;
     }
     if (passwordValidator(values.password)) {
       alert("Password must be at least 5 characters!");
+      return;
     }
     if (passwordControlValidator(values.password, values.passwordControl)) {
       alert("Two passwords that you entered are not matching!");
+      return;
     }
     console.log("Formdan Gelen Veriler: ", values);
 
-    dispacth(registerUser(values.username,values.password))
-  history.push("/login")
-
+    dispacth(registerUser(values.username, values.password));
+    history.push("/login");
   };
   return (
     <Form
@@ -102,11 +102,7 @@ const SignupScreen = () => {
         />
       </Form.Item>
       <Form.Item>
-        <Form.Item name='already-have-an-account'>
-          <a href='#' className='login-navigation'>
-            Already have an account?
-          </a>
-        </Form.Item>
+        <Form.Item name='already-have-an-account'></Form.Item>
       </Form.Item>
       <Form.Item>
         <Button type='primary' htmlType='submit' className='signup-form-button'>
@@ -115,6 +111,6 @@ const SignupScreen = () => {
       </Form.Item>
     </Form>
   );
-}
+};
 
-export default SignupScreen;
+export default SignupPage;
