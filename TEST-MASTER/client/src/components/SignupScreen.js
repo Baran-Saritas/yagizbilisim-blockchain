@@ -8,7 +8,16 @@ import {
   passwordValidator,
   passwordControlValidator,
 } from "../helpers/passwordValidator";
-function SignupScreen() {
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { registerUser } from "../store/actions/userActions";
+
+const SignupScreen = () => {
+
+  const dispacth = useDispatch();
+  const history = useHistory();
+
+
   const onFinish = (values) => {
     if (emailValidator(values.email)) {
       alert("Incorrect Email!");
@@ -20,6 +29,10 @@ function SignupScreen() {
       alert("Two passwords that you entered are not matching!");
     }
     console.log("Formdan Gelen Veriler: ", values);
+
+    dispacth(registerUser(values.username,values.password))
+  history.push("/login")
+
   };
   return (
     <Form
