@@ -129,6 +129,11 @@ const AppLayout = () => {
   // ctrl + k c   k u
   return (
     <div className='App'>
+      <div className="asd">
+        {localStorage.getItem("currentUser")}
+      </div>
+
+
       <div className='container'>
         <form className='form-inline'>
           <label htmlFor='paper-type'>Belge Türü</label>
