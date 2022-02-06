@@ -4,6 +4,7 @@ import { io } from "socket.io-client";
 //BlockChain Imports
 import Transaction from "../../chain/Transaction";
 import BlockChain from "../../chain/BlockChain";
+import { useNavigate } from "react-router";
 
 const EC = require("elliptic").ec;
 const ec = new EC("secp256k1");
@@ -24,7 +25,7 @@ const AppLayout = () => {
   const [notify, setNotify] = useState(false);
   const [code, setCode] = useState(""); // kisinin public keyi
   const [belge, setBelge] = useState([]);
-
+  const navigate = useNavigate();
   const opt1 = useRef(null);
   const opt2 = useRef(null);
   const file = useRef(null);
@@ -42,6 +43,13 @@ const AppLayout = () => {
       setRes(e.target.result);
     };
     reader.readAsDataURL(fileName);
+  };
+
+  const signOut = () => {
+    console.log("asdas");
+    localStorage.removeItem("currentUser");
+    navigate("/login");
+
   };
 
   useEffect(() => {
@@ -129,7 +137,11 @@ const AppLayout = () => {
   // ctrl + k c   k u
   return (
     <div className='App'>
-      <div className='asd'>{localStorage.getItem("currentUser")}</div>
+      <div className='asd'>
+      <button onClick={signOut} type='button'>
+            Sign out
+          </button>
+           </div>
 
       <div className='container'>
         <form className='form-inline'>
