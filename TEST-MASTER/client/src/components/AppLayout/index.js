@@ -46,7 +46,6 @@ const AppLayout = () => {
   };
 
   const signOut = () => {
-    console.log("asdas");
     localStorage.removeItem("currentUser");
     navigate("/login");
 
@@ -134,7 +133,6 @@ const AppLayout = () => {
     });
   }, [code]);
 
-  // ctrl + k c   k u
   return (
     <div className='App'>
       <div className='asd'>
@@ -191,7 +189,7 @@ const AppLayout = () => {
             onChange={(e) => setFileName(e.target.files[0])}
             type='file'
             name='belge-yukleme'
-            accept='.pdf'
+            accept='.pdf,docx'
             id='belge-yukleme'
           />
 
@@ -210,7 +208,7 @@ const AppLayout = () => {
                 <a
                   href={eleman.transactions[0].data.data}
                   target='_self'
-                  download={eleman.transactions[0].data.fName + ".pdf"}
+                  download={eleman.transactions[0].data.fName + ".docx"}
                 >
                   <p>{eleman.transactions[0].data.fName}</p>
                 </a>

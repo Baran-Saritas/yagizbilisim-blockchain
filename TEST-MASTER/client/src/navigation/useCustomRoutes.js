@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Navigate } from "react-router";
 import AppLayout from "../components/AppLayout";
 import LoginPage from "../components/LoginPage";
-
+import SignupPage from "../components/SignupPage";
 export const useCustomRoutes = () => {
   let isLogin = localStorage.getItem("currentUser");
 
@@ -19,6 +19,7 @@ export const useCustomRoutes = () => {
 //     });
 //   }
 // });
+
   return [
     {
       path: "/",
@@ -30,7 +31,7 @@ export const useCustomRoutes = () => {
     },
     {
       path: "/register",
-      element: isLogin ? <Navigate to='/' /> : <LoginPage />,
+      element: isLogin ? <Navigate to='/' /> : <SignupPage/>,
     },
   ];
 };

@@ -14,5 +14,22 @@
 }
 .login-navigation {
   text-align: right;
-  color: #aaaaaa;
+  color: #aaaaaa; 
+}
+input[type="password"],
+input[type="password"]:focus   
+{
+         background: transparent;
+         border: none;
+         outline-width: 0;
+}
+input[type="text"],
+input[type="text"]:focus   
+{
+         background: transparent;
+         border: none;
+         outline-width: 0;
+}
+input::placeholder{
+  color: white !important;
 }

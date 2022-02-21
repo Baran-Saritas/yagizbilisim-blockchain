@@ -10,10 +10,12 @@ import { useHistory, useNavigate } from "react-router-dom";
 const LoginPage = () => {
   const dispacth = useDispatch();
   const navigate = useNavigate();
-  const onFinish = (values) => {
+  const  onFinish = (values) => {
     console.log("Formdan Gelen Veriler: ", values);
     dispacth(loginUser(values.username, values.password));
-    navigate("/");
+    if(localStorage.getItem("currentUser") !== null){
+      navigate("/");   
+    } 
   };
   return (
     <Form
@@ -34,6 +36,7 @@ const LoginPage = () => {
         ]}
       >
         <Input
+          style={{background:"transparent"}}
           prefix={<UserOutlined className='site-form-item-icon' />}
           placeholder='Username'
         />
@@ -48,6 +51,7 @@ const LoginPage = () => {
         ]}
       >
         <Input
+          style={{background:"transparent"}}
           prefix={<LockOutlined className='site-form-item-icon' />}
           type='password'
           placeholder='Password'

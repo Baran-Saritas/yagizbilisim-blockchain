@@ -53,6 +53,7 @@ const SignupPage = () => {
         ]}
       >
         <Input
+          style={{background:"transparent"}}
           prefix={<MailOutlined className='site-form-item-icon' />}
           placeholder='Email'
         />
@@ -67,6 +68,7 @@ const SignupPage = () => {
         ]}
       >
         <Input
+          style={{background:"transparent"}}
           prefix={<UserOutlined className='site-form-item-icon' />}
           placeholder='Username'
         />
@@ -81,6 +83,8 @@ const SignupPage = () => {
         ]}
       >
         <Input
+          style={{background:"transparent"}}
+
           prefix={<LockOutlined className='site-form-item-icon' />}
           type='password'
           placeholder='Password'
@@ -96,6 +100,7 @@ const SignupPage = () => {
         ]}
       >
         <Input
+          style={{background:"transparent"}}
           prefix={<LockOutlined className='site-form-item-icon' />}
           type='password'
           placeholder='Again Password'
