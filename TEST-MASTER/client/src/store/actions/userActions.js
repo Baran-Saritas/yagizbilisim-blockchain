@@ -35,7 +35,6 @@ export const loginUser = (username, password) => async (dispatch) => {
 
 export const registerUser = (username, password) => async (dispatch) => {
   // register
-
   try {
     dispatch({ type: POST_DATA_REQUEST });
 

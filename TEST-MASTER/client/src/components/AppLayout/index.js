@@ -17,15 +17,17 @@ const AppLayout = () => {
       "baran",
     "04fbf87e3de7d50670a1b0ffcd83b3bd1666fa0a4fc0a290fb0643658eec8b31dfd5a0aa26b3fb5aa119ec62c61e54c589c0e9107124eb6a84948ff2d4b8e577a6":
       "ozcan",
+    "04a58cdcb8bf754729878b42a7092ce12d6618c9e18515621ab6ed1ec27476838856e70ac17dfd7568eaa45a3d86b6d3bfb1dd6dcef1bf6c62853aa45d4397d90c":
+      "ahmet",
   };
   const [belgeTuru, setBelgeTuru] = useState("");
   const [kisi, setKisi] = useState("");
   const [fileName, setFileName] = useState("");
   const [res, setRes] = useState("");
   const [notify, setNotify] = useState(false);
-  const [code, setCode] = useState(""); // kisinin public keyi
+  const [code, setCode] = useState("");   // kisinin public keyi
   const [belge, setBelge] = useState([]);
-  const navigate = useNavigate();
+
   const opt1 = useRef(null);
   const opt2 = useRef(null);
   const file = useRef(null);
@@ -45,13 +47,9 @@ const AppLayout = () => {
     reader.readAsDataURL(fileName);
   };
 
-  const signOut = () => {
-    localStorage.removeItem("currentUser");
-    navigate("/login");
-
-  };
 
   useEffect(() => {
+
     if (res !== "") {
       console.log("trans blogu");
       let timer = new Date();
@@ -79,24 +77,25 @@ const AppLayout = () => {
       setTimeout(() => setNotify(false), 4000);
       console.log("trans blogu sonu : ", (new Date() - timer) / 1000);
     }
-  }, [res]);
+  }, [res,kisi]);
 
-  useEffect(() => {
-    // kod atamasi
+
+  useEffect(() => {    // kod atamasi
     let res = prompt("kisi kodu girin");
     if (res !== null && res !== "") {
       setCode(res);
     }
   }, []);
 
+
   useEffect(() => {
     if (!code) return;
-    console.log("socket.current :", socket.current);
+    console.log("socket.current :",socket.current);
     socket.current = io("http://localhost:5000/", {
       transports: ["websocket", "polling", "flashsocket"],
     });
     blockChain.current = new BlockChain("null");
-    console.log("socket.current :", socket.current.blockChain);
+    console.log("socket.current :",socket.current.blockChain);
     key.current = ec.keyFromPrivate(
       code + "6abc91f1cd74bcfccc5b0508f6d7e019d114e2e99139a2d11ff362cd6ffc82c"
     );
@@ -121,7 +120,7 @@ const AppLayout = () => {
       console.log("send blogu");
       let timer = new Date();
       blockChain.current.chain = JSON.parse(chain);
-      console.log("x", JSON.parse(chain));
+      console.log("x",JSON.parse(chain));
       let tempArray = blockChain.current.chain.filter((el) => {
         console.log();
         return (
@@ -131,40 +130,35 @@ const AppLayout = () => {
       setBelge(tempArray);
       console.log("send blogu zamani : ", (new Date() - timer) / 1000);
     });
+
   }, [code]);
 
   return (
-    <div className='App'>
-      <div className='asd'>
-      <button onClick={signOut} type='button'>
-            Sign out
-          </button>
-           </div>
-
-      <div className='container'>
-        <form className='form-inline'>
-          <label htmlFor='paper-type'>Belge Türü</label>
+    <div className="App">
+      <div className="container">
+        <form className="form-inline">
+          <label htmlFor="paper-type">Belge Türü</label>
           <select
             defaultValue={"default"}
             onChange={(e) => setBelgeTuru(e.target.value)}
-            name='paper-type'
-            id='paper-type'
+            name="paper-type"
+            id="paper-type"
           >
-            <option ref={opt1} value='default' disabled hidden>
+            <option ref={opt1} value="default" disabled hidden>
               Belge Türü Seçiniz...
             </option>
-            <option value='obelgesi'>Öğrenci Belgesi</option>
-            <option value='transkript'>Transkript</option>
+            <option value="obelgesi">Öğrenci Belgesi</option>
+            <option value="transkript">Transkript</option>
           </select>
 
-          <label htmlFor='kisi'>Gönderilecek Kişi</label>
+          <label htmlFor="kisi">Gönderilecek Kişi</label>
           <select
             defaultValue={"default"}
             onChange={(e) => setKisi(e.target.value)}
-            name='kisi'
-            id='kisi'
+            name="kisi"
+            id="kisi"
           >
-            <option ref={opt2} value='default' disabled hidden>
+            <option ref={opt2} value="default" disabled hidden>
               Kişi Seçiniz...
             </option>
             {Object.keys(publicKeys).map((el) => {
@@ -173,7 +167,7 @@ const AppLayout = () => {
                 return (
                   <option key={el} value={publicKeys[el]}>
                     {
-                      { baran: "Baran", ozcan: "Özcan", ziya: "Ziya" }[
+                      { baran: "Baran", ozcan: "Özcan", ziya: "Ziya" , ahmet:"Ahmet" }[
                         publicKeys[el]
                       ]
                     }
@@ -183,32 +177,32 @@ const AppLayout = () => {
             })}
           </select>
 
-          <label htmlFor='belge-yukleme'>Belge Yükle:</label>
+          <label htmlFor="belge-yukleme">Belge Yükle:</label>
           <input
             ref={file}
             onChange={(e) => setFileName(e.target.files[0])}
-            type='file'
-            name='belge-yukleme'
-            accept='.pdf,docx'
-            id='belge-yukleme'
+            type="file"
+            name="belge-yukleme"
+            accept=".pdf"
+            id="belge-yukleme"
           />
 
-          <button onClick={send} type='submit'>
+          <button onClick={send} type="submit">
             Gönder
           </button>
           {notify && (
-            <div id='notify'>{`${fileName.name} adlı dosya ${kisi} adlı kişiye gönderildi!`}</div>
+            <div id="notify">{`${fileName.name} adlı dosya ${kisi} adlı kişiye gönderildi!`}</div>
           )}
         </form>
 
-        <div className='right'>
+        <div className="right">
           {belge.map((eleman, index) => {
             return (
-              <div key={index} className='def'>
+              <div key={index} className="def">
                 <a
                   href={eleman.transactions[0].data.data}
-                  target='_self'
-                  download={eleman.transactions[0].data.fName + ".docx"}
+                  target="_self"
+                  download={eleman.transactions[0].data.fName + ".pdf"}
                 >
                   <p>{eleman.transactions[0].data.fName}</p>
                 </a>
@@ -220,6 +214,6 @@ const AppLayout = () => {
       </div>
     </div>
   );
-};
+}
 
 export default AppLayout;

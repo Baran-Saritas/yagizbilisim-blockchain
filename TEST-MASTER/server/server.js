@@ -4,7 +4,11 @@ const http = require("http");
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const { Block } = require("./Block");
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: "*"
+  }
+});
 const { BlockChain } = require("./BlockChain");
 const Transaction = require("./Transaction");
 const path = require("path");
