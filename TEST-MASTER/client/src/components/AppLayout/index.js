@@ -17,6 +17,8 @@ const AppLayout = () => {
       "baran",
     "04fbf87e3de7d50670a1b0ffcd83b3bd1666fa0a4fc0a290fb0643658eec8b31dfd5a0aa26b3fb5aa119ec62c61e54c589c0e9107124eb6a84948ff2d4b8e577a6":
       "ozcan",
+    "04a58cdcb8bf754729878b42a7092ce12d6618c9e18515621ab6ed1ec27476838856e70ac17dfd7568eaa45a3d86b6d3bfb1dd6dcef1bf6c62853aa45d4397d90c":
+      "ahmet",
   };
   const [belgeTuru, setBelgeTuru] = useState("");
   const [kisi, setKisi] = useState("");
@@ -48,7 +50,6 @@ const AppLayout = () => {
   const signOut = () => {
     localStorage.removeItem("currentUser");
     navigate("/login");
-
   };
 
   useEffect(() => {
@@ -136,10 +137,10 @@ const AppLayout = () => {
   return (
     <div className='App'>
       <div className='asd'>
-      <button onClick={signOut} type='button'>
-            Sign out
-          </button>
-           </div>
+        <button onClick={signOut} type='button'>
+          Sign out
+        </button>
+      </div>
 
       <div className='container'>
         <form className='form-inline'>
@@ -173,9 +174,12 @@ const AppLayout = () => {
                 return (
                   <option key={el} value={publicKeys[el]}>
                     {
-                      { baran: "Baran", ozcan: "Özcan", ziya: "Ziya" }[
-                        publicKeys[el]
-                      ]
+                      {
+                        baran: "Baran",
+                        ozcan: "Özcan",
+                        ziya: "Ziya",
+                        ahmet: "Ahmet",
+                      }[publicKeys[el]]
                     }
                   </option>
                 );
